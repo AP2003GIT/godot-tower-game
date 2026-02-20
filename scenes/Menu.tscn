@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://scripts/tower_background.gd" id="2_tower_bg"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_tower_bg")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(520, 380)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0431373, 0.215686, 0.505882, 1)
+theme_override_font_sizes/font_size = 54
+text = ":3 Tower"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0784314, 0.282353, 0.560784, 1)
+theme_override_font_sizes/font_size = 22
+text = "Jump forever on stone slabs"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_focus_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_hover_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "Play"
+
+[node name="ShopButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_focus_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_hover_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "Shop"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_focus_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_hover_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "Exit"

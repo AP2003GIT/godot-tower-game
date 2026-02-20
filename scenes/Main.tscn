@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/Platform.tscn" id="2_platform_scene"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="3_player_scene"]
+[ext_resource type="Script" path="res://scripts/tower_background.gd" id="4_tower_bg"]
+[ext_resource type="Script" path="res://scripts/lava.gd" id="5_lava"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+platform_scene = ExtResource("2_platform_scene")
+
+[node name="CanvasLayerBG" type="CanvasLayer" parent="."]
+layer = -5
+
+[node name="Background" type="ColorRect" parent="CanvasLayerBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_tower_bg")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Lava" type="Node2D" parent="World"]
+z_index = -20
+script = ExtResource("5_lava")
+
+[node name="Player" parent="World" instance=ExtResource("3_player_scene")]
+
+[node name="CanvasLayerHUD" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="HUD" type="Control" parent="CanvasLayerHUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelLabel" type="Label" parent="CanvasLayerHUD/HUD"]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 420.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(0.89, 0.91, 0.95, 1)
+theme_override_font_sizes/font_size = 38
+text = "Level 1  Best 1"
+
+[node name="InfoLabel" type="Label" parent="CanvasLayerHUD/HUD"]
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 460.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(0.78, 0.81, 0.87, 1)
+theme_override_font_sizes/font_size = 22
+text = "Move: Arrows/A,D  Jump: Space/W/Up  Menu: Esc"
+
+[node name="RestartButton" type="Button" parent="CanvasLayerHUD/HUD"]
+offset_left = 566.0
+offset_top = 18.0
+offset_right = 702.0
+offset_bottom = 68.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Restart"
+
+[node name="CoinsLabel" type="Label" parent="CanvasLayerHUD/HUD"]
+offset_left = 18.0
+offset_top = 132.0
+offset_right = 360.0
+offset_bottom = 176.0
+theme_override_colors/font_color = Color(0.89, 0.91, 0.95, 1)
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 0
+text = "Coins: 0"
+
+[node name="DoubleJumpLabel" type="Label" parent="CanvasLayerHUD/HUD"]
+offset_left = 18.0
+offset_top = 174.0
+offset_right = 360.0
+offset_bottom = 214.0
+theme_override_colors/font_color = Color(0.80, 0.83, 0.90, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 0
+text = "Q: Locked"

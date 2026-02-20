@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/shop.gd" id="1_shop"]
+[ext_resource type="Script" path="res://scripts/tower_background.gd" id="2_tower_bg"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shop")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_tower_bg")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(620, 470)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = 26.0
+offset_right = -26.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Character Shop"
+horizontal_alignment = 1
+
+[node name="CoinsLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Coins: 0"
+horizontal_alignment = 1
+
+[node name="CharacterSelect" type="OptionButton" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+
+[node name="PreviewPanel" type="Panel" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+
+[node name="PreviewRoot" type="Node2D" parent="CenterContainer/Panel/MarginContainer/VBox/PreviewPanel"]
+position = Vector2(284, 82)
+
+[node name="PreviewSprite" type="AnimatedSprite2D" parent="CenterContainer/Panel/MarginContainer/VBox/PreviewPanel/PreviewRoot"]
+scale = Vector2(1.1, 1.1)
+
+[node name="PreviewLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox/PreviewPanel"]
+offset_left = 12.0
+offset_top = 130.0
+offset_right = 568.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 18
+text = "Preview"
+horizontal_alignment = 1
+
+[node name="DetailsLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Details"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Buy"
+
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.952941, 0.976471, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Back"
