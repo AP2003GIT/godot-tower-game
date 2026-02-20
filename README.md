@@ -1,40 +1,63 @@
-# Blue Smiley Tower (Godot)
+# Fortress Climber (Godot 4)
 
-Small Godot 4 game where a dark-blue `:3` smiley jumps up an endless tower.
+Endless tower-climber with unlockable characters, coin economy, and Q abilities.
 
-## Install
+## Requirements
 
-- Install Godot 4.2+ (standard build is enough, Mono is not required).
+- Godot `4.x` (standard build; Mono not required)
 
-## Run In One Click (Editor)
+## Run
 
 1. Open Godot.
-2. Import project from `godot_tower_game/project.godot`.
-3. Press the Run Project button (or `F5`).
-4. The game now opens in a menu scene with `Play` and `Exit`.
+2. Import `project.godot`.
+3. Press `F5` to run.
 
-## Run In One Click (Standalone App)
+## Gameplay
 
-1. In Godot, open `Editor > Manage Export Templates` and install templates.
-2. Open `Project > Export...`.
-3. Add your target preset (`Windows Desktop`, `Linux/X11`, or `macOS`).
-4. Click `Export Project` to generate an executable.
-5. Launch the exported executable directly (double-click).
+- Endless procedural slab generation while climbing upward.
+- Rising lava loss condition: if lava catches the player, run restarts.
+- Run tracker with `Level`, `Best`, `Coins`, and context `Q` ability status.
+- Persistent progress via `user://save_data.json`.
 
 ## Controls
 
-- `Left` / `Right`: Move
-- `Space`: Jump
-- `Esc`: Back to menu
+- `Left` / `A`: Move left
+- `Right` / `D`: Move right
+- `Space` / `W` / `Up`: Jump
+- `Q`: Character ability (only if equipped character has one)
+- `Esc`: Return to menu
 
-## Menu
+## Coins
 
-- `Play`: Starts the tower run.
-- `Exit`: Quits the game (desktop builds).
+Coins are awarded per new slab reached in a run:
 
-## Notes
+- Slabs `1-20`: `+1` coin each
+- Slabs `21-40`: `+2` coins each
+- Slabs `41-60`: `+3` coins each
+- Slabs `61-80`: `+4` coins each
+- Slabs `81+`: `+5` coins each
 
-- Background is light blue.
-- Player smiley is dark blue.
-- Platforms use a procedural stone-style texture generated in `scripts/platform.gd`.
-- Tower generation is endless upward while you climb.
+## Shop And Characters
+
+- Shop menu lists available characters from spriteframe assets.
+- Buy/equip flow:
+1. Select a character.
+2. Preview animation is shown before buying.
+3. Buy if enough coins, then equip.
+- Character prices are `100`, `200`, `300`, `400`, `500`, with selected special characters at `1000`.
+
+## Abilities (Q)
+
+- `500`-coin characters: `Double Jump` on `Q` with `15s` cooldown.
+- `1000`-coin characters: `Flight` on `Q` for `5s` duration with `30s` cooldown.
+- Characters without ability do not show Q cooldown/status UI.
+
+## Saved Data
+
+The game saves:
+
+- Highest score
+- Current coins
+- Total coins earned
+- Owned characters
+- Equipped character

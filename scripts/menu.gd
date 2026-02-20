@@ -44,7 +44,7 @@ func _show_project_identity() -> void:
 	var project_root: String = ProjectSettings.globalize_path("res://")
 	var normalized_root: String = project_root.replace("\\", "/")
 
-	print("[BlueSmileyTower] Project root: ", project_root)
+	print("[FortressClimber] Project root: ", project_root)
 	title_label.text = MENU_TITLE
 	subtitle_label.text = MENU_SUBTITLE
 
