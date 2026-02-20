@@ -5,8 +5,6 @@ extends StaticBody2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var polygon: Polygon2D = $Polygon2D
 
-static var shared_stone_texture: Texture2D
-
 
 func _ready() -> void:
 	add_to_group("platform")
@@ -28,25 +26,21 @@ func get_height() -> float:
 
 func _rebuild() -> void:
 	var rect_shape: RectangleShape2D = RectangleShape2D.new()
-	rect_shape.size = size
+	# Use a slightly slimmer collider than the visual slab to avoid side-edge
+	# snag impulses that can launch the player.
+	rect_shape.size = Vector2(size.x, maxf(10.0, size.y - 8.0))
 	collision_shape.shape = rect_shape
 	collision_shape.one_way_collision = false
 
-	if shared_stone_texture == null:
-		shared_stone_texture = _create_stone_texture(256, 64)
-
-	# Keep Polygon2D hidden and draw explicitly to avoid renderer/version differences.
+	# Keep Polygon2D hidden and draw explicitly.
 	polygon.visible = false
 	queue_redraw()
 
 
 func _draw() -> void:
 	var platform_rect: Rect2 = Rect2(-size * 0.5, size)
-	if shared_stone_texture:
-		# Stretch instead of tiling to avoid repeated edge seams/stripe artifacts.
-		draw_texture_rect(shared_stone_texture, platform_rect, false, Color(1, 1, 1, 1))
-	else:
-		draw_rect(platform_rect, Color(0.63, 0.66, 0.72, 1.0), true)
+	draw_rect(platform_rect, Color(0.63, 0.66, 0.72, 1.0), true)
+	_draw_brick_pattern(platform_rect)
 
 	draw_rect(platform_rect, Color(0.27, 0.30, 0.34, 0.92), false, 2.0)
 	draw_line(
@@ -57,45 +51,23 @@ func _draw() -> void:
 	)
 
 
-func _create_stone_texture(width: int, height: int) -> Texture2D:
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	rng.seed = 29031
-
-	var noise: FastNoiseLite = FastNoiseLite.new()
-	noise.seed = 11807
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.11
-
-	var image: Image = Image.create(width, height, false, Image.FORMAT_RGBA8)
-
-	for y: int in range(height):
-		var row_mix: float = float(y) / float(height - 1)
-		var vertical_tint: float = lerpf(0.08, -0.07, row_mix)
-		for x: int in range(width):
-			var n: float = noise.get_noise_2d(float(x), float(y))
-			var grain: float = rng.randf_range(-0.03, 0.03)
-			var shade: float = clampf(0.56 + (n * 0.14) + grain + vertical_tint, 0.0, 1.0)
-			image.set_pixel(
-				x,
-				y,
-				Color(
-					shade,
-					clampf(shade + 0.03, 0.0, 1.0),
-					clampf(shade + 0.06, 0.0, 1.0),
-					1.0
-				)
-			)
-
-	for _i: int in range(12):
-		var crack_y: int = rng.randi_range(4, height - 5)
-		var crack_start: int = rng.randi_range(0, width - 24)
-		var crack_len: int = rng.randi_range(18, 64)
-		var crack_end: int = mini(width - 1, crack_start + crack_len)
-		for x: int in range(crack_start, crack_end):
-			if rng.randf() < 0.86:
-				var y_offset: int = rng.randi_range(-1, 1)
-				var pixel_y: int = int(clampf(float(crack_y + y_offset), 1.0, float(height - 2)))
-				image.set_pixel(x, pixel_y, Color(0.33, 0.34, 0.36, 1.0))
-
-	image.generate_mipmaps()
-	return ImageTexture.create_from_image(image)
+func _draw_brick_pattern(rect: Rect2) -> void:
+	var brick_h: float = 9.0
+	var brick_w: float = 24.0
+	var row: int = 0
+	var y: float = rect.position.y + 2.0
+	while y < rect.end.y - 2.0:
+		var offset: float = 0.0 if row % 2 == 0 else brick_w * 0.5
+		var x: float = rect.position.x + 2.0 - offset
+		while x < rect.end.x - 2.0:
+			var bw: float = minf(brick_w - 1.0, rect.end.x - x - 2.0)
+			var bh: float = minf(brick_h - 1.0, rect.end.y - y - 2.0)
+			if bw > 4.0 and bh > 3.0:
+				var shade: float = 0.03 if (row + int(floor(x / brick_w))) % 2 == 0 else -0.02
+				var fill: Color = Color(0.63 + shade, 0.66 + shade, 0.72 + shade, 0.20)
+				draw_rect(Rect2(x, y, bw, bh), fill, true)
+				draw_rect(Rect2(x, y, bw, 1.0), Color(0.90, 0.92, 0.96, 0.16), true)
+				draw_rect(Rect2(x, y + bh - 1.0, bw, 1.0), Color(0.15, 0.17, 0.21, 0.20), true)
+			x += brick_w
+		y += brick_h
+		row += 1
